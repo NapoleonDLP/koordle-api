@@ -1,0 +1,25 @@
+{
+  "name": "koordle-api",
+  "version": "1.0.0",
+  "description": "Server for Koordle app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NapoleonDLP/koordle-api.git"
+  },
+  "author": "Napoleon DLP",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NapoleonDLP/koordle-api/issues"
+  },
+  "homepage": "https://github.com/NapoleonDLP/koordle-api#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
