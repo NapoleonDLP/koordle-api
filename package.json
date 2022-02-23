@@ -4,6 +4,8 @@
   "description": "Server for Koordle app",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon index.js --watch",
+    "start": "index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
