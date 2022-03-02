@@ -1,13 +1,13 @@
 const DB = require('../db.js');
-const randomWord = require('random-word-by-length');
+const { newWord } = require('../helpers.js');
 
 //TODO: find a better solution for acquiring random word
 const getNewWord = (req, res) => {
   const wordLength = req.body.wordLength || 5;
-  let newWord = randomWord(wordLength);
+  let newWord = newWord(wordLength);
 
   while(newWord.length !== wordLength) {
-    newWord = randomWord(wordLength)
+    newWord = newWord(wordLength)
   }
 
   console.log('getNewWord Ran: ', newWord);
