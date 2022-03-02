@@ -1,14 +1,10 @@
 const DB = require('../db.js');
-const { newWord } = require('../helpers.js');
+const { generateWord } = require('../helpers.js');
 
 //TODO: find a better solution for acquiring random word
 const getNewWord = (req, res) => {
   const wordLength = req.body.wordLength || 5;
-  let newWord = newWord(wordLength);
-
-  while(newWord.length !== wordLength) {
-    newWord = newWord(wordLength)
-  }
+  let newWord = generateWord(wordLength);
 
   console.log('getNewWord Ran: ', newWord);
   res.send({ newWord });
@@ -21,6 +17,7 @@ const isWordValid = (req, res) => {
 
 //Create a new game
 const postNewGame = (req, res) => {
+  // declare data object
   // declare new word
   // default set to
 };
