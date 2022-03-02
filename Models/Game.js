@@ -10,6 +10,8 @@ const gameSchema = new Schema({
     attemptedWord: String,
     attemptedResult: String
   }],
+  created: { timestamp: { type: Date, default: Date.now }},
+  updated: { timestamp: { type: Date, default: Date.now }},
 });
 
 const Game = mongoose.model('Game', gameSchema);
