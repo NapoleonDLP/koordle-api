@@ -3,21 +3,25 @@ const { User } = require('../Models/User.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-const createUser = (req, res) => {
+const createUser = async (req, res) => {
   let data = {};
   data.username = req.body.username;
   data.email = req.body.email;
 
-  bcrypt.hash(req.body.password, saltRounds)
+  await bcrypt.hash(req.body.password, saltRounds)
     .then(hash => data.password = hash)
     .catch(e => res.status(500))
 
   try {
-    const newUser = new User(data);
-    newUser.save();
+    let newUser = new User(data);
+    await newUser.save();
+
+    newUser = newUser.toObject();
+    delete newUser.password;
+
     res.send(newUser);
   } catch (e) {
-    console.error(e);
+    console.log(e);
     res.status(500);
   }
 };
