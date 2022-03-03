@@ -18,6 +18,7 @@ app.get('/', (req, res) => {
   //Check word for result
 app.get('/new-word', Games.getNewWord);
 app.post('/new-game', Games.postNewGame);
+app.post('/word-check', Games.postWordCheck);
 
 //User
   //Register new user
