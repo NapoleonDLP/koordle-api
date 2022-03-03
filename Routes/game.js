@@ -1,6 +1,7 @@
 const { DB } = require('../db.js');
 const { generateWord, isWordValid } = require('../helpers.js');
 const { Game } = require('../Models/Game.js');
+const { User } = require('../Models/User.js');
 
 //TODO: find a better solution for acquiring random word
 const getNewWord = (req, res) => {
@@ -11,31 +12,36 @@ const getNewWord = (req, res) => {
   res.send({ newWord });
 };
 
-const postWordCheck = (req, res) => {
-  isWordValid(req.body.word);
+const postWordCheck = async (req, res) => {
+  let isWord = isWordValid(req.body.word);
+  let userId = req.body.user_id;
+
+  //get word from user.activegame
+  let game = await User.findById(userId, 'activeGame')
+
+
+  // iterate through req.body.word
 
   res.send(req.body.word);
 };
 
 //Create a new game
-const postNewGame = (req, res) => {
+const postNewGame = async (req, res) => {
   const wordLength = req.body.wordLength || 5;
-  // declare data object
   let data = {};
-  // declare new word
   data.word = generateWord(wordLength);
+  data.user_id = req.body.user_id;
 
   try {
     const newGame = new Game(data);
-    newGame.save();
+    await newGame.save();
+    await User.findByIdAndUpdate(req.body.user_id, { activeGame: newGame._id });
+
     res.send(newGame);
   } catch (e) {
     console.error(e);
     res.status(500);
   }
-  // default set to
-  // data.user_id = req.body.user_id || ;
-
 };
 
 module.exports = {
