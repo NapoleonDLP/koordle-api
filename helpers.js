@@ -1,12 +1,15 @@
-const randomWord = require('random-word-by-length');
 const axios = require('axios');
+const { words } = require('./words.js');
+
+const randomNumber = (max) => {
+  return Math.floor(Math.random() * max);
+};
 
 const generateWord = (wordLength) => {
-  let newWord = randomWord(wordLength);
-
-  while (newWord.length !== wordLength) {
-    newWord = randomWord(wordLength)
-  }
+  //currently not doing anything with wordLength
+  //keep for future implementation
+  const randomIndex = randomNumber(words.length - 1);
+  const newWord = words[randomIndex];
 
   return newWord;
 };

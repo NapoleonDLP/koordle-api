@@ -2463,4 +2463,4 @@ const words = [
   "zones"
 ]
 
-export default words;
+module.exports = { words };
