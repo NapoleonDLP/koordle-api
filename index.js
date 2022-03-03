@@ -1,6 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const Games = require('./Routes/game.js');
+const Users = require('./Routes/user.js');
 const app = express();
 const port = process.env.PORT || 3000;
 const cors = require('cors');
@@ -23,7 +24,7 @@ app.post('/new-game', Games.postNewGame);
   //Update user profile
   //Login
   //Update settings
-app.post('/register')
+app.post('/register', Users.createUser);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
