@@ -10,7 +10,10 @@ const createUser = async (req, res) => {
 
   await bcrypt.hash(req.body.password, saltRounds)
     .then(hash => data.password = hash)
-    .catch(e => res.status(500))
+    .catch(e => {
+      console.log('Hashing Error: ', e);
+      res.status(500);
+    });
 
   try {
     let newUser = new User(data);
@@ -21,7 +24,7 @@ const createUser = async (req, res) => {
 
     res.send(newUser);
   } catch (e) {
-    console.log(e);
+    console.log('DB Error: ', e);
     res.status(500);
   }
 };
