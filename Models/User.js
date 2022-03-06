@@ -5,7 +5,7 @@ const userSchema = new Schema({
   username: { type: String, required: true, lowercase: true, unique: true },
   email: { type: String, required: true, lowercase: true, unique: true },
   password: { type: String, required: true },
-  activeGame: Schema.Types.ObjectId,
+  activeGame: { type: mongoose.ObjectId, ref: 'Game' },
   playedGames: [ Schema.Types.ObjectId ],
   wins: Number,
   losses: Number,
