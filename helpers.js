@@ -16,13 +16,11 @@ const generateWord = (wordLength) => {
 
 const isWordValid = async (word) => {
   const url = process.env.WEBSTER_URL + word + process.env.WEBSTER_KEY;
-  console.log(url)
   const response = await axios.get(url)
-    // .then(data => data.json())
-    .then(data => data)
+    .then(data => data.data)
     .catch(e => console.log('Word Check Error: ', e));
 
-  console.log(response.data);
+  return response[0].meta ? true : false;
 };
 
 module.exports = {
