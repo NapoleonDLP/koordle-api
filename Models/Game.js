@@ -8,7 +8,7 @@ const gameSchema = new Schema({
   user_id: { type: mongoose.ObjectId, ref:'User', required: true },
   attempts: [{
     attemptedWord: String,
-    attemptedResult: String,
+    attemptedResult: Boolean,
   }],
   created: { timestamp: { type: Date, default: Date.now }},
   updated: { timestamp: { type: Date, default: Date.now }},
