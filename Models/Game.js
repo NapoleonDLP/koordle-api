@@ -5,7 +5,7 @@ const gameSchema = new Schema({
   word: { type: String, required: true, lowercase: true },
   result: String,
   active: Boolean,
-  user_id: { type: Schema.Types.ObjectId/*, required: true */},
+  user_id: { type: mongoose.ObjectId, ref:'User', required: true },
   attempts: [{
     attemptedWord: String,
     attemptedResult: String,
