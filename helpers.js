@@ -23,7 +23,31 @@ const isWordValid = async (word) => {
   return response[0].meta ? true : false;
 };
 
+const score = (attemptedWord, answer) => {
+  //declare an empty string
+  let score = '';
+  //iterate through word
+  for (let i = 0; i < attemptedWord.length; i++) {
+    //if current letter is equal to the letter in the answer at the same index
+    if (attemptedWord[i] === answer[i]) {
+      //append 2 to the string
+      score += 2;
+    } else if (answer.includes(attemptedWord[i])) {
+      //if the current letter is found in the answer
+        //append 1 to the string
+      score += 1;
+    } else {
+      score += 0;
+    }
+    //if it is not eqaul and is not found
+      //append 0 to the string
+  }
+  //return the string
+  return score;
+};
+
 module.exports = {
   generateWord,
   isWordValid,
+  score,
 };
