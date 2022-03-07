@@ -23,7 +23,7 @@ const isWordValid = async (word) => {
   return response[0].meta ? true : false;
 };
 
-const score = (attemptedWord, answer) => {
+const calculateScore = (attemptedWord, answer) => {
   //declare an empty string
   let score = '';
   //iterate through word
@@ -49,5 +49,5 @@ const score = (attemptedWord, answer) => {
 module.exports = {
   generateWord,
   isWordValid,
-  score,
+  calculateScore,
 };

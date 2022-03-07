@@ -9,6 +9,7 @@ const gameSchema = new Schema({
   attempts: [{
     attemptedWord: String,
     attemptedResult: Boolean,
+    score: String,
   }],
   created: { timestamp: { type: Date, default: Date.now }},
   updated: { timestamp: { type: Date, default: Date.now }},

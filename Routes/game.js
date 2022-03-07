@@ -1,5 +1,5 @@
 const { DB } = require('../db.js');
-const { generateWord, isWordValid } = require('../helpers.js');
+const { generateWord, isWordValid, calculateScore } = require('../helpers.js');
 const { Game } = require('../Models/Game.js');
 const { User } = require('../Models/User.js');
 
@@ -18,18 +18,21 @@ const postWordCheck = async (req, res) => {
   const attemptedWord = req.body.word;
   let isWord = isWordValid(attemptedWord);
   let attemptedResult = null;
+  let score = null;
 
   try {
     const user = await User.findByIdAndUpdate(userId)
       .populate({ path: 'activeGame', select: 'word ' });
 
     attemptedResult = attemptedWord === user.activeGame.word;
+    score = await calculateScore(attemptedWord, user.activeGame.word);
 
     const attemptedGame = await Game.findByIdAndUpdate(user.activeGame._id, {
         $push :{
           attempts: {
             attemptedWord,
-            attemptedResult
+            attemptedResult,
+            score,
           }
         }
       }, {
@@ -59,7 +62,8 @@ const postNewGame = async (req, res) => {
     const newGame = new Game(data);
     await newGame.save();
     await User.findByIdAndUpdate(req.body.user_id, { activeGame: newGame._id });
-
+    //TODO: Once front end is refactored remove the word property
+    // before sending to the front end
     res.send(newGame);
   } catch (e) {
     console.error(e);
