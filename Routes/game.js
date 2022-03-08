@@ -3,7 +3,6 @@ const { generateWord, isWordValid, calculateScore } = require('../helpers.js');
 const { Game } = require('../Models/Game.js');
 const { User } = require('../Models/User.js');
 
-//TODO: find a better solution for acquiring random word
 const getNewWord = (req, res) => {
   const wordLength = req.body.wordLength || 5;
   let newWord = generateWord(wordLength);
@@ -59,14 +58,34 @@ const postNewGame = async (req, res) => {
   data.user_id = req.body.user_id;
 
   try {
-    const newGame = new Game(data);
+    let newGame = new Game(data);
     await newGame.save();
-    await User.findByIdAndUpdate(req.body.user_id, { activeGame: newGame._id });
-    //TODO: Once front end is refactored remove the word property
-    // before sending to the front end
+    newGame = newGame.toObject();
+    delete newGame.word;
+    console.log("NU NU: ", newGame)
+
+    await User.findByIdAndUpdate(req.body.user_id, { activeGame: newGame._id }, { returnDocument: 'after' });
     res.send(newGame);
   } catch (e) {
     console.error(e);
+    res.status(500);
+  }
+};
+
+const getAnswerByGameId = async (req, res) => {
+  try {
+    const game = await Game.findById(req.params.id);
+    const attemptsCount = game.attempts.length;
+    const lastAttempt = game.attempts[attemptsCount-1];
+
+    if ((lastAttempt.attemptedResult) || (attemptsCount >= 6)) {
+      res.send({ answer: game.word });
+    } else {
+      console.log('Game is not over. Answer will not be revealed');
+      res.status(500);
+    }
+  } catch (e) {
+    console.log('Error: ', e);
     res.status(500);
   }
 };
@@ -75,4 +94,5 @@ module.exports = {
   getNewWord,
   postNewGame,
   postWordCheck,
+  getAnswerByGameId,
 };
