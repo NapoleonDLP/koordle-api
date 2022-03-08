@@ -19,6 +19,7 @@ app.get('/', (req, res) => {
 app.get('/new-word', Games.getNewWord);
 app.post('/new-game', Games.postNewGame);
 app.post('/word-check', Games.postWordCheck);
+app.get('/get-answer/:id', Games.getAnswerByGameId);
 
 //User
   //Register new user
