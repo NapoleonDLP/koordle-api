@@ -4,9 +4,13 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 const createUser = async (req, res) => {
-  let data = {};
-  data.username = req.body.username;
-  data.email = req.body.email;
+  const { username, email, password } = req.body;
+
+  if (!username || !email || !password) {
+    return res.status(400).json({ msg: 'Please enter all fields'});
+  }
+
+  let data = { username, email };
 
   await bcrypt.hash(req.body.password, saltRounds)
     .then(hash => data.password = hash)
