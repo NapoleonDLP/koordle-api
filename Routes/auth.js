@@ -8,8 +8,6 @@ const authenticate = async (req, res) => {
   const { userEmail, password } = req.body;
   const user = await User.findOne({ email: userEmail });
 
-  console.log("GALLETAS: ", req.cookies)
-
   if (!user) {
     res.status(400).json({ error: 'Email not found' });
     return;
@@ -27,7 +25,7 @@ const authenticate = async (req, res) => {
         expiresIn: '2 days'
       });
       res.cookie('token', token, { httpOnly: true })
-        .sendStatus(200);
+        .json({ redirect: '/'})
     }
   });
 };
