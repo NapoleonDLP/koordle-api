@@ -23,7 +23,6 @@ const authenticate = async (req, res) => {
       res.status(401).json({ error: 'Password incorrect' });
     } else {
       const payload = { userEmail };
-      console.log('LOAD: ', payload)
       const token = await jwt.sign(payload, secret, {
         expiresIn: '2 days'
       });
