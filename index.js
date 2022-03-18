@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const Games = require('./Routes/game.js');
 const Users = require('./Routes/user.js');
+const Auth = require('./Routes/auth.js');
 const app = express();
 const port = process.env.PORT || 3000;
 const cors = require('cors');
@@ -25,6 +26,7 @@ app.get('/get-answer/:id', Games.getAnswerByGameId);
   //Register new user
   //Update user profile
   //Login
+app.post('/authenticate', Auth.authenticate);
   //Update settings
 app.post('/register', Users.createUser);
 
