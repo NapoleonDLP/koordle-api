@@ -29,10 +29,14 @@ app.get('/get-answer/:id', Games.getAnswerByGameId);
 //User
   //Register new user
   //Update user profile
-  //Login
-app.post('/authenticate', Auth.authenticate);
   //Update settings
-app.post('/register', Users.createUser);
+  app.post('/register', Users.createUser);
+
+  //Auth
+  //Login
+  app.post('/authenticate', Auth.authenticate);
+  app.get('/checkToken', withAuth, () => res.sendStatus(200));
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
